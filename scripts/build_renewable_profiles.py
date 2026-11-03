@@ -131,8 +131,41 @@ if __name__ == "__main__":
     regions = regions.set_index("name").rename_axis("bus")
     if snakemake.wildcards.technology.startswith("offwind"):
         # for offshore regions, the shortest distance to the shoreline is used
-        offshore_regions = availability.coords["bus"].values
-        regions = regions.loc[offshore_regions]
+        
+    
+        offshore_regions = pd.Index(
+            availability.coords["bus"].values
+        )
+
+        # Identificar regiones que tienen correspondencia geográfica
+        valid = offshore_regions[
+            offshore_regions.isin(regions.index)
+        ]
+
+        missing = offshore_regions.difference(regions.index)
+
+        logger.warning(
+            f"EAGLE - Regiones offshore: "
+            f"{len(offshore_regions)} originales, "
+            f"{len(valid)} validas, "
+            f"{len(missing)} ausentes"
+        )
+
+        if len(missing) > 0:
+            logger.warning(
+                f"EAGLE - Regiones excluidas: {missing.tolist()}"
+            )
+
+        if len(valid) == 0:
+            raise ValueError(
+                "EAGLE: No existen regiones offshore coincidentes"
+            )
+
+        # Filtrar AMBOS conjuntos con los mismos identificadores
+        availability = availability.sel(bus=valid.tolist())
+        regions = regions.loc[valid]
+
+
         regions = regions.map(lambda g: _simplify_polys(g, minarea=1)).set_crs(
             regions.crs
         )

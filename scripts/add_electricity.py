@@ -352,22 +352,50 @@ def load_and_aggregate_powerplants(
             strategies[k] = pd.Series.sum
 
     aggregated = df.groupby(grouper, as_index=False).agg(strategies)
-    aggregated.index = aggregated.bus + " " + aggregated.carrier
+    
+    # EAGLE - Comprobar identificadores de generadores
+
+    # Verificar que no existen valores ausentes
+    for columna in ["bus", "carrier"]:
+        if aggregated[columna].isna().any():
+            raise ValueError(
+                f"EAGLE: Hay valores ausentes en '{columna}'"
+            )
+
+    # Convertir los identificadores a cadenas Python
+    buses = aggregated["bus"].map(str).astype(object)
+    carriers = aggregated["carrier"].map(str).astype(object)
+
+    # Crear identificadores de generadores
+    aggregated.index = pd.Index([
+        f"{bus} {carrier}"
+        for bus, carrier in zip(buses, carriers)
+    ])
+
+    # Verificar que no se han generado nombres duplicados
+    if aggregated.index.has_duplicates:
+        raise ValueError(
+            "EAGLE: Hay identificadores de generadores duplicados"
+        )
+
     aggregated.build_year = aggregated.build_year.astype(int)
     aggregated.carrier = aggregated.carrier.str.replace(
         r" Q\d+ efficiency", "", regex=True
     )
 
     disaggregated = ppl[~to_aggregate].copy()
-    disaggregated.index = (
-        disaggregated.bus
-        + " "
-        + disaggregated.carrier
-        + " "
-        + disaggregated.index.astype(str)
-        + " "
-        + disaggregated.name
-    )
+    
+    # EAGLE - Crear identificadores sin errores de PyArrow
+    disaggregated.index = pd.Index([
+        f"{bus} {carrier} {idx} {name}"
+        for bus, carrier, idx, name in zip(
+            disaggregated["bus"].to_numpy(),
+            disaggregated["carrier"].to_numpy(),
+            disaggregated.index.astype(str),
+            disaggregated["name"].to_numpy()
+        )
+    ])
+
     disaggregated = disaggregated[aggregated.columns]
 
     return pd.concat([aggregated, disaggregated])

@@ -1,0 +1,747 @@
+Using workflow specific profile profiles\default for setting default command line arguments.
+Config file config/config.default.yaml is extended by additional config specified via the command line.
+Config file config/plotting.default.yaml is extended by additional config specified via the command line.
+Assuming unrestricted shared filesystem usage.
+
+SNAKEMAKE
+=========
+  Date: 2026-10-30 09:25:51
+  Workflow ID: b9d3a64c-5d39-4905-b4f4-292a27801528
+  Platform: Windows-11-10.0.26300-SP0
+  Host: portatil
+  User: Naiara
+  Snakemake version: 9.27.0
+  Python version: 3.13.15 | packaged by conda-forge | (main, Sep  2 2026, 21:52:43) [MSC v.1944 64 bit (AMD64)]
+  Command: C:\Users\naiar\anaconda3\envs\pypsa-eur\Scripts\snakemake compose_networks -n --cores 2 --configfile config/config.eagle.yaml
+  Snakefile: C:\Users\naiar\Documents\EAGLE\pypsa-eur\Snakefile
+  Base directory: C:\Users\naiar\Documents\EAGLE\pypsa-eur
+  Run directory: C:\Users\naiar\Documents\EAGLE\pypsa-eur
+  Working directory: C:\Users\naiar\Documents\EAGLE\pypsa-eur
+  Config file(s): [WindowsPath('C:/Users/naiar/Documents/EAGLE/pypsa-eur/config/config.eagle.yaml'), 'config/config.default.yaml', 'config/plotting.default.yaml']
+  Config MD5: ada49f25b0f1bee010e2b4d5bbb87eee
+
+Building DAG of jobs...
+Job stats:
+job                                         count
+----------------------------------------  -------
+retrieve_co2_prices                             1
+retrieve_corine                                 1
+retrieve_cost_data                              1
+retrieve_country_runoff                         1
+retrieve_cutout                                 1
+retrieve_desnz_electricity_consumption          1
+retrieve_eez                                    1
+retrieve_electricity_demand_energy_atlas        1
+retrieve_electricity_demand_entsoe              1
+retrieve_electricity_demand_neso                1
+retrieve_electricity_demand_opsd                1
+retrieve_eu_nuts_2021                           1
+retrieve_eurostat_balances                      1
+retrieve_gdp_per_capita                         1
+retrieve_gebco                                  1
+retrieve_ghg_emissions                          1
+retrieve_jrc_ardeco                             1
+retrieve_natura                                 1
+retrieve_ons_lad                                1
+retrieve_osm_archive                            1
+retrieve_osm_boundaries                         1
+retrieve_population_count                       1
+retrieve_powerplants                            1
+retrieve_ship_raster                            1
+retrieve_synthetic_electricity_demand           1
+retrieve_worldbank_urban_population             1
+build_co2_prices                                1
+build_electricity_demand                        1
+build_eurostat_balances                         1
+build_offshore_shapes                           1
+build_osm_boundaries                            4
+build_ship_raster                               1
+build_nuts3_shapes                              1
+build_population_layouts                        1
+build_shapes                                    1
+base_network                                    1
+build_hydro_profile                             1
+build_transmission_projects                     1
+add_transmission_projects_and_dlr               1
+simplify_network                                1
+build_electricity_demand_base                   1
+process_cost_data                               1
+cluster_network                                 1
+build_powerplants                               1
+cluster_electricity_demand                      1
+determine_availability_matrix                   6
+build_renewable_profiles                        6
+build_solar_rooftop_potentials                  1
+time_aggregation                                1
+compose_network                                 1
+compose_networks                                1
+total                                          64
+
+
+[Fri Oct 30 09:25:58 2026]
+Retrieving cost data for 2050
+rule retrieve_cost_data:
+    input: https://data.pypsa.org/workflows/eur/costs/v0.15.0/costs_2050.csv (retrieve from storage)
+    output: data/costs/archive/v0.15.0/costs_2050.csv
+    jobid: 51
+    reason: Missing output files: data/costs/archive/v0.15.0/costs_2050.csv
+    wildcards: horizon=2050
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving UK ONS Local Authority Districts (LAD) Boundaries data
+rule retrieve_ons_lad:
+    input: https://data.pypsa.org/workflows/eur/ons_lad/may-2024/ons_lad.geojson (retrieve from storage)
+    output: data/ons_lad/archive/may-2024/Local_Authority_Districts_May_2024_Boundaries__UK_BSC.geojson
+    jobid: 28
+    reason: Missing output files: data/ons_lad/archive/may-2024/Local_Authority_Districts_May_2024_Boundaries__UK_BSC.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving DESNZ subnational electricity consumption data
+rule retrieve_desnz_electricity_consumption:
+    output: data/desnz_electricity_consumption/archive/2026-02-16/Subnational_electricity_consumption_statistics_2005-2024.xlsx
+    jobid: 27
+    reason: Missing output files: data/desnz_electricity_consumption/archive/2026-02-16/Subnational_electricity_consumption_statistics_2005-2024.xlsx
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving powerplants data
+rule retrieve_powerplants:
+    input: https://data.pypsa.org/workflows/eur/powerplants/0.8.1/powerplants.csv (retrieve from storage)
+    output: data/powerplants/archive/0.8.1/powerplants.csv
+    jobid: 53
+    reason: Missing output files: data/powerplants/archive/0.8.1/powerplants.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving shipping raster data
+rule retrieve_ship_raster:
+    input: https://data.pypsa.org/workflows/eur/ship_raster/v5/shipdensity_global.zip (retrieve from storage)
+    output: data/ship_raster/archive/v5/shipdensity_global.zip
+    log: logs/retrieve_ship_raster.log
+    jobid: 43
+    reason: Missing output files: data/ship_raster/archive/v5/shipdensity_global.zip
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Retrieving OSM admin boundaries data
+rule retrieve_osm_boundaries:
+    input: https://data.pypsa.org/workflows/eur/osm_boundaries/unknown/osm_boundaries.zip (retrieve from storage)
+    output: data/osm_boundaries/archive/unknown/XK_adm1.json, data/osm_boundaries/archive/unknown/UA_adm1.json, data/osm_boundaries/archive/unknown/MD_adm1.json, data/osm_boundaries/archive/unknown/BA_adm1.json, data/osm_boundaries/archive/unknown/osm_boundaries.zip
+    jobid: 10
+    reason: Missing output files: data/osm_boundaries/archive/unknown/BA_adm1.json, data/osm_boundaries/archive/unknown/UA_adm1.json, data/osm_boundaries/archive/unknown/XK_adm1.json, data/osm_boundaries/archive/unknown/MD_adm1.json
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving cutout data for europe-2013-sarah3-era5
+rule retrieve_cutout:
+    input: https://data.pypsa.org/workflows/cutout/v1.0/europe-2013-sarah3-era5.nc (retrieve from storage)
+    output: data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    log: logs/retrieve_cutout/europe-2013-sarah3-era5.log
+    jobid: 34
+    reason: Missing output files: data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: cutout=europe-2013-sarah3-era5
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Retrieving EU NUTS 2021 data
+rule retrieve_eu_nuts_2021:
+    input: https://data.pypsa.org/workflows/eur/eu_nuts2021/2021-01-01/ref-nuts-2021-01m.geojson.zip (retrieve from storage)
+    output: data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson.zip, data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson, data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson, data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_2.geojson, data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_1.geojson, data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_0.geojson
+    jobid: 8
+    reason: Missing output files: data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving electricity demand data from OPSD from archive
+rule retrieve_electricity_demand_opsd:
+    input: https://data.pypsa.org/workflows/eur/opsd_electricity_demand/2026-02-02/electricity_demand_opsd_raw.csv (retrieve from storage)
+    output: data/opsd_electricity_demand/archive/2026-02-02/electricity_demand_opsd_raw.csv
+    jobid: 30
+    reason: Missing output files: data/opsd_electricity_demand/archive/2026-02-02/electricity_demand_opsd_raw.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving GEBCO bathymetry data
+rule retrieve_gebco:
+    input: https://data.pypsa.org/workflows/eur/gebco/2014/GEBCO_2014_2D.nc (retrieve from storage)
+    output: data/gebco/archive/2014/GEBCO_2014_2D.nc
+    jobid: 41
+    reason: Missing output files: data/gebco/archive/2014/GEBCO_2014_2D.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving Eurostat balances data
+rule retrieve_eurostat_balances:
+    input: https://data.pypsa.org/workflows/eur/eurostat_balances/2026-02/nrg_bal_c (retrieve from storage)
+    output: data/eurostat_balances/archive/2026-02/estat_nrg_bal_c.tsv.gz
+    jobid: 57
+    reason: Missing output files: data/eurostat_balances/archive/2026-02/estat_nrg_bal_c.tsv.gz
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving CO2 emission allowances price in EU ETS system
+rule retrieve_co2_prices:
+    output: data/instrat_co2_prices/primary/unknown/prices_eu_ets_all.csv
+    log: logs/retrieve_co2_prices.log
+    jobid: 55
+    reason: Missing output files: data/instrat_co2_prices/primary/unknown/prices_eu_ets_all.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Retrieving country runoff data
+rule retrieve_country_runoff:
+    input: https://data.pypsa.org/workflows/eur/country_runoff/2025-08-13/era5-runoff-per-country.csv (retrieve from storage)
+    output: data/country_runoff/archive/2025-08-13/era5-runoff-per-country.csv
+    jobid: 49
+    reason: Missing output files: data/country_runoff/archive/2025-08-13/era5-runoff-per-country.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving electricity demand data from NESO from archive
+rule retrieve_electricity_demand_neso:
+    input: https://data.pypsa.org/workflows/eur/neso_electricity_demand/2026-02-02/electricity_demand_neso_raw.csv (retrieve from storage)
+    output: data/neso_electricity_demand/archive/2026-02-02/electricity_demand_neso_raw.csv
+    jobid: 31
+    reason: Missing output files: data/neso_electricity_demand/archive/2026-02-02/electricity_demand_neso_raw.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving World Bank urban population data
+rule retrieve_worldbank_urban_population:
+    input: https://data.pypsa.org/workflows/eur/worldbank_urban_population/2025-08-14/API_SP.URB.TOTL.IN.ZS_DS2_en_csv_v2_22447.zip (retrieve from storage)
+    output: data/worldbank_urban_population/archive/2025-08-14/API_SP.URB.TOTL.IN.ZS_DS2_en_csv_v2.zip, data/worldbank_urban_population/archive/2025-08-14/API_SP.URB.TOTL.IN.ZS_DS2_en_csv_v2.csv
+    jobid: 63
+    reason: Missing output files: data/worldbank_urban_population/archive/2025-08-14/API_SP.URB.TOTL.IN.ZS_DS2_en_csv_v2.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving electricity demand data from ENTSO-E from archive
+rule retrieve_electricity_demand_entsoe:
+    input: https://data.pypsa.org/workflows/eur/entsoe_electricity_demand/2026-02-02/electricity_demand_entsoe_raw.csv (retrieve from storage)
+    output: data/entsoe_electricity_demand/archive/2026-02-02/electricity_demand_entsoe_raw.csv
+    jobid: 32
+    reason: Missing output files: data/entsoe_electricity_demand/archive/2026-02-02/electricity_demand_entsoe_raw.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving Corine land cover data
+rule retrieve_corine:
+    input: https://data.pypsa.org/workflows/eur/corine/v18_5/corine.zip (retrieve from storage)
+    output: data/corine/archive/v18_5/corine.zip, data/corine/archive/v18_5/corine.tif
+    jobid: 4
+    reason: Missing output files: data/corine/archive/v18_5/corine.tif
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving JRC ARDECO data
+rule retrieve_jrc_ardeco:
+    input: https://data.pypsa.org/workflows/eur/jrc_ardeco/2021/ARDECO-SUVGDP.2021.table.csv (retrieve from storage), https://data.pypsa.org/workflows/eur/jrc_ardeco/2021/ARDECO-SNPTD.2021.table.csv (retrieve from storage)
+    output: data/jrc_ardeco/archive/2021/ARDECO-SUVGDP.2021.table.csv, data/jrc_ardeco/archive/2021/ARDECO-SNPTD.2021.table.csv
+    jobid: 15
+    reason: Missing output files: data/jrc_ardeco/archive/2021/ARDECO-SUVGDP.2021.table.csv, data/jrc_ardeco/archive/2021/ARDECO-SNPTD.2021.table.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving EEZ data
+rule retrieve_eez:
+    input: https://data.pypsa.org/workflows/eur/eez/v12_20231025/World_EEZ_v12_20231025_LR.zip (retrieve from storage)
+    output: data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR.zip, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    jobid: 11
+    reason: Missing output files: data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving synthetic electricity demand data
+rule retrieve_synthetic_electricity_demand:
+    input: https://zenodo.org/records/10820928/files/demand_hourly.csv (retrieve from storage)
+    output: data/synthetic_electricity_demand/primary/v2/load_synthetic_raw.csv
+    jobid: 33
+    reason: Missing output files: data/synthetic_electricity_demand/primary/v2/load_synthetic_raw.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving GHG emissions data
+rule retrieve_ghg_emissions:
+    input: https://data.pypsa.org/workflows/eur/ghg_emissions/v23/UNFCCC_v23.csv (retrieve from storage)
+    output: data/ghg_emissions/archive/v23/UNFCCC_v23.csv
+    jobid: 58
+    reason: Missing output files: data/ghg_emissions/archive/v23/UNFCCC_v23.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving Natura 2000 raster data
+rule retrieve_natura:
+    input: https://data.pypsa.org/workflows/eur/natura/2025-08-15/natura.tiff (retrieve from storage)
+    output: data/natura/archive/2025-08-15/natura.tiff
+    log: logs/retrieve_natura.log
+    jobid: 5
+    reason: Missing output files: data/natura/archive/2025-08-15/natura.tiff
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving OSM archive data
+rule retrieve_osm_archive:
+    input: https://data.pypsa.org/workflows/eur/osm/0.7/buses.csv (retrieve from storage), https://data.pypsa.org/workflows/eur/osm/0.7/converters.csv (retrieve from storage), https://data.pypsa.org/workflows/eur/osm/0.7/lines.csv (retrieve from storage), https://data.pypsa.org/workflows/eur/osm/0.7/links.csv (retrieve from storage), https://data.pypsa.org/workflows/eur/osm/0.7/transformers.csv (retrieve from storage), https://data.pypsa.org/workflows/eur/osm/0.7/map.html (retrieve from storage)
+    output: data/osm/archive/0.7/buses.csv, data/osm/archive/0.7/converters.csv, data/osm/archive/0.7/lines.csv, data/osm/archive/0.7/links.csv, data/osm/archive/0.7/transformers.csv, data/osm/archive/0.7/map.html
+    log: logs/retrieve_osm_archive.log
+    jobid: 23
+    reason: Missing output files: data/osm/archive/0.7/lines.csv, data/osm/archive/0.7/transformers.csv, data/osm/archive/0.7/buses.csv, data/osm/archive/0.7/converters.csv, data/osm/archive/0.7/links.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=500, mem=500 MB, mem_mib=477
+[Fri Oct 30 09:25:58 2026]
+Retrieving GDP per capita data
+rule retrieve_gdp_per_capita:
+    input: https://data.pypsa.org/workflows/eur/gdp_per_capita/2018-02-06/GDP_per_capita_PPP_1990_2015_v2.nc (retrieve from storage)
+    output: data/gdp_per_capita/archive/2018-02-06/GDP_per_capita_PPP_1990_2015_v2.nc
+    jobid: 17
+    reason: Missing output files: data/gdp_per_capita/archive/2018-02-06/GDP_per_capita_PPP_1990_2015_v2.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving JRC Energy Atlas electricity demand data raster
+rule retrieve_electricity_demand_energy_atlas:
+    output: data/jrc_energy_atlas/archive/2026-02-16/electricity_tot_demand_2019.tif
+    jobid: 26
+    reason: Missing output files: data/jrc_energy_atlas/archive/2026-02-16/electricity_tot_demand_2019.tif
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Retrieving population count data
+rule retrieve_population_count:
+    input: https://data.pypsa.org/workflows/eur/population_count/2018-11-01/ppp_2019_1km_Aggregated.tif (retrieve from storage)
+    output: data/population_count/archive/2018-11-01/ppp_2019_1km_Aggregated.tif
+    jobid: 18
+    reason: Missing output files: data/population_count/archive/2018-11-01/ppp_2019_1km_Aggregated.tif
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+[Fri Oct 30 09:25:58 2026]
+Building CO2 price time series
+rule build_co2_prices:
+    input: data/instrat_co2_prices/primary/unknown/prices_eu_ets_all.csv
+    output: resources/eagle_full/co2_price.csv
+    log: logs/eagle_full/build_co2_prices.log
+    jobid: 54
+    benchmark: benchmarks\eagle_full\build_co2_prices.tsv
+    reason: Missing output files: resources/eagle_full/co2_price.csv; Input files updated by another job: data/instrat_co2_prices/primary/unknown/prices_eu_ets_all.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building electricity demand time series
+rule build_electricity_demand:
+    input: data/opsd_electricity_demand/archive/2026-02-02/electricity_demand_opsd_raw.csv, data/neso_electricity_demand/archive/2026-02-02/electricity_demand_neso_raw.csv, data/entsoe_electricity_demand/archive/2026-02-02/electricity_demand_entsoe_raw.csv, data/synthetic_electricity_demand/primary/v2/load_synthetic_raw.csv
+    output: resources/eagle_full/electricity_demand.csv
+    log: logs/eagle_full/build_electricity_demand.log
+    jobid: 29
+    benchmark: benchmarks\eagle_full\build_electricity_demand.tsv
+    reason: Missing output files: resources/eagle_full/electricity_demand.csv; Input files updated by another job: data/opsd_electricity_demand/archive/2026-02-02/electricity_demand_opsd_raw.csv, data/synthetic_electricity_demand/primary/v2/load_synthetic_raw.csv, data/entsoe_electricity_demand/archive/2026-02-02/electricity_demand_entsoe_raw.csv, data/neso_electricity_demand/archive/2026-02-02/electricity_demand_neso_raw.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building OSM boundaries for BA
+rule build_osm_boundaries:
+    input: data/osm_boundaries/archive/unknown/BA_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    output: data/osm_boundaries/build/unknown/BA_adm1.geojson
+    log: logs/build_osm_boundaries_BA.log
+    jobid: 9
+    reason: Missing output files: data/osm_boundaries/build/unknown/BA_adm1.geojson; Input files updated by another job: data/osm_boundaries/archive/unknown/BA_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    wildcards: country=BA
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building OSM boundaries for UA
+rule build_osm_boundaries:
+    input: data/osm_boundaries/archive/unknown/UA_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    output: data/osm_boundaries/build/unknown/UA_adm1.geojson
+    log: logs/build_osm_boundaries_UA.log
+    jobid: 13
+    reason: Missing output files: data/osm_boundaries/build/unknown/UA_adm1.geojson; Input files updated by another job: data/osm_boundaries/archive/unknown/UA_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    wildcards: country=UA
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building offshore shapes
+rule build_offshore_shapes:
+    input: data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    output: resources/eagle_full/offshore_shapes.geojson
+    log: logs/eagle_full/build_offshore_shapes.log
+    jobid: 16
+    benchmark: benchmarks\eagle_full\build_offshore_shapes.tsv
+    reason: Missing output files: resources/eagle_full/offshore_shapes.geojson; Input files updated by another job: data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building Eurostat energy balances
+rule build_eurostat_balances:
+    input: data/eurostat_balances/archive/2026-02/estat_nrg_bal_c.tsv.gz
+    output: resources/eagle_full/eurostat_energy_balances.csv
+    log: logs/eagle_full/build_eurostat_balances.log
+    jobid: 56
+    benchmark: benchmarks\eagle_full\build_eurostat_balances.tsv
+    reason: Missing output files: resources/eagle_full/eurostat_energy_balances.csv; Input files updated by another job: data/eurostat_balances/archive/2026-02/estat_nrg_bal_c.tsv.gz
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=4000, mem=4 GB, mem_mib=3815
+[Fri Oct 30 09:25:58 2026]
+Building OSM boundaries for XK
+rule build_osm_boundaries:
+    input: data/osm_boundaries/archive/unknown/XK_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    output: data/osm_boundaries/build/unknown/XK_adm1.geojson
+    log: logs/build_osm_boundaries_XK.log
+    jobid: 14
+    reason: Missing output files: data/osm_boundaries/build/unknown/XK_adm1.geojson; Input files updated by another job: data/osm_boundaries/archive/unknown/XK_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    wildcards: country=XK
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building ship density raster
+rule build_ship_raster:
+    input: data/ship_raster/archive/v5/shipdensity_global.zip, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/shipdensity_raster.tif
+    log: logs/eagle_full/build_ship_raster.log
+    jobid: 42
+    benchmark: benchmarks\eagle_full\build_ship_raster.tsv
+    reason: Missing output files: resources/eagle_full/shipdensity_raster.tif; Input files updated by another job: data/ship_raster/archive/v5/shipdensity_global.zip, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building OSM boundaries for MD
+rule build_osm_boundaries:
+    input: data/osm_boundaries/archive/unknown/MD_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    output: data/osm_boundaries/build/unknown/MD_adm1.geojson
+    log: logs/build_osm_boundaries_MD.log
+    jobid: 12
+    reason: Missing output files: data/osm_boundaries/build/unknown/MD_adm1.geojson; Input files updated by another job: data/osm_boundaries/archive/unknown/MD_adm1.json, data/eez/archive/v12_20231025/World_EEZ_v12_20231025_LR/eez_v12_lowres.gpkg
+    wildcards: country=MD
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building NUTS3 shapes
+rule build_nuts3_shapes:
+    input: data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson, data/osm_boundaries/build/unknown/BA_adm1.geojson, data/osm_boundaries/build/unknown/MD_adm1.geojson, data/osm_boundaries/build/unknown/UA_adm1.geojson, data/osm_boundaries/build/unknown/XK_adm1.geojson, data/jrc_ardeco/archive/2021/ARDECO-SUVGDP.2021.table.csv, data/jrc_ardeco/archive/2021/ARDECO-SNPTD.2021.table.csv, resources/eagle_full/offshore_shapes.geojson, data/gdp_per_capita/archive/2018-02-06/GDP_per_capita_PPP_1990_2015_v2.nc, data/population_count/archive/2018-11-01/ppp_2019_1km_Aggregated.tif
+    output: resources/eagle_full/nuts3_shapes.geojson
+    log: logs/eagle_full/build_nuts3_shapes.log
+    jobid: 7
+    benchmark: benchmarks\eagle_full\build_nuts3_shapes.tsv
+    reason: Missing output files: resources/eagle_full/nuts3_shapes.geojson; Input files updated by another job: data/osm_boundaries/build/unknown/XK_adm1.geojson, resources/eagle_full/offshore_shapes.geojson, data/osm_boundaries/build/unknown/BA_adm1.geojson, data/eu_nuts2021/archive/2021-01-01/ref-nuts-2021-01m.geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson, data/jrc_ardeco/archive/2021/ARDECO-SNPTD.2021.table.csv, data/gdp_per_capita/archive/2018-02-06/GDP_per_capita_PPP_1990_2015_v2.nc, data/population_count/archive/2018-11-01/ppp_2019_1km_Aggregated.tif, data/osm_boundaries/build/unknown/UA_adm1.geojson, data/osm_boundaries/build/unknown/MD_adm1.geojson, data/jrc_ardeco/archive/2021/ARDECO-SUVGDP.2021.table.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building population layout data (total, urban, rural) from NUTS3 shapes and World Bank statistics
+rule build_population_layouts:
+    input: resources/eagle_full/nuts3_shapes.geojson, data/worldbank_urban_population/archive/2025-08-14/API_SP.URB.TOTL.IN.ZS_DS2_en_csv_v2.csv, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/pop_layout_total.nc, resources/eagle_full/pop_layout_urban.nc, resources/eagle_full/pop_layout_rural.nc
+    log: logs/eagle_full/build_population_layouts.log
+    jobid: 62
+    benchmark: benchmarks\eagle_full\build_population_layouts.tsv
+    reason: Missing output files: resources/eagle_full/pop_layout_total.nc; Input files updated by another job: data/worldbank_urban_population/archive/2025-08-14/API_SP.URB.TOTL.IN.ZS_DS2_en_csv_v2.csv, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/nuts3_shapes.geojson
+    threads: 2
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=20000, mem=20 GB, mem_mib=19074
+[Fri Oct 30 09:25:58 2026]
+Building country and Europe shapes
+rule build_shapes:
+    input: resources/eagle_full/nuts3_shapes.geojson, resources/eagle_full/offshore_shapes.geojson
+    output: resources/eagle_full/country_shapes.geojson, resources/eagle_full/europe_shape.geojson
+    log: logs/eagle_full/build_shapes.log
+    jobid: 6
+    benchmark: benchmarks\eagle_full\build_shapes.tsv
+    reason: Missing output files: resources/eagle_full/country_shapes.geojson, resources/eagle_full/europe_shape.geojson; Input files updated by another job: resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/nuts3_shapes.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=1500, mem=1.5 GB, mem_mib=1431
+[Fri Oct 30 09:25:58 2026]
+Building base network
+rule base_network:
+    input: data/osm/archive/0.7/buses.csv, data/osm/archive/0.7/transformers.csv, data/osm/archive/0.7/converters.csv, data/osm/archive/0.7/links.csv, data/osm/archive/0.7/lines.csv, resources/eagle_full/nuts3_shapes.geojson, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/europe_shape.geojson
+    output: resources/eagle_full/networks/base.nc, resources/eagle_full/onshore_regions_base.geojson, resources/eagle_full/offshore_regions_base.geojson, resources/eagle_full/admin_shapes.geojson
+    log: logs/eagle_full/base_network.log
+    jobid: 22
+    benchmark: benchmarks\eagle_full\base_network.tsv
+    reason: Missing output files: resources/eagle_full/onshore_regions_base.geojson, resources/eagle_full/offshore_regions_base.geojson, resources/eagle_full/networks/base.nc, resources/eagle_full/admin_shapes.geojson; Input files updated by another job: data/osm/archive/0.7/transformers.csv, data/osm/archive/0.7/lines.csv, resources/eagle_full/offshore_shapes.geojson, data/osm/archive/0.7/converters.csv, data/osm/archive/0.7/buses.csv, data/osm/archive/0.7/links.csv, resources/eagle_full/country_shapes.geojson, resources/eagle_full/europe_shape.geojson, resources/eagle_full/nuts3_shapes.geojson
+    threads: 2
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=2000, mem=2 GB, mem_mib=1908
+[Fri Oct 30 09:25:58 2026]
+Building hydropower profile
+rule build_hydro_profile:
+    input: resources/eagle_full/country_shapes.geojson, data/eia_hydro_annual_generation.csv, data/eia_hydro_annual_capacity.csv, data/country_runoff/archive/2025-08-13/era5-runoff-per-country.csv, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_hydro.nc
+    log: logs/eagle_full/build_hydro_profile.log
+    jobid: 48
+    benchmark: benchmarks\eagle_full\build_hydro_profile.tsv
+    reason: Missing output files: resources/eagle_full/profile_hydro.nc; Input files updated by another job: data/country_runoff/archive/2025-08-13/era5-runoff-per-country.csv, resources/eagle_full/country_shapes.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building transmission projects
+rule build_transmission_projects:
+    input: resources/eagle_full/networks/base.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/europe_shape.geojson, data/transmission_projects/tyndp2020, data/transmission_projects/nep, data/transmission_projects/manual
+    output: resources/eagle_full/transmission_projects/new_lines.csv, resources/eagle_full/transmission_projects/new_links.csv, resources/eagle_full/transmission_projects/adjust_lines.csv, resources/eagle_full/transmission_projects/adjust_links.csv, resources/eagle_full/transmission_projects/new_buses.csv
+    log: logs/eagle_full/build_transmission_projects.log
+    jobid: 24
+    benchmark: benchmarks\eagle_full\build_transmission_projects.tsv
+    reason: Missing output files: resources/eagle_full/transmission_projects/new_links.csv, resources/eagle_full/transmission_projects/adjust_lines.csv, resources/eagle_full/transmission_projects/adjust_links.csv, resources/eagle_full/transmission_projects/new_lines.csv, resources/eagle_full/transmission_projects/new_buses.csv; Input files updated by another job: resources/eagle_full/networks/base.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/europe_shape.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=4000, mem=4 GB, mem_mib=3815
+[Fri Oct 30 09:25:58 2026]
+Adding transmission projects and dynamic line ratings
+rule add_transmission_projects_and_dlr:
+    input: resources/eagle_full/networks/base.nc, resources/eagle_full/transmission_projects/new_buses.csv, resources/eagle_full/transmission_projects/new_lines.csv, resources/eagle_full/transmission_projects/new_links.csv, resources/eagle_full/transmission_projects/adjust_lines.csv, resources/eagle_full/transmission_projects/adjust_links.csv
+    output: resources/eagle_full/networks/base_extended.nc
+    log: logs/eagle_full/add_transmission_projects_and_dlr.log
+    jobid: 21
+    benchmark: benchmarks\eagle_full\add_transmission_projects_and_dlr.tsv
+    reason: Missing output files: resources/eagle_full/networks/base_extended.nc; Input files updated by another job: resources/eagle_full/transmission_projects/adjust_links.csv, resources/eagle_full/transmission_projects/new_lines.csv, resources/eagle_full/networks/base.nc, resources/eagle_full/transmission_projects/new_links.csv, resources/eagle_full/transmission_projects/new_buses.csv, resources/eagle_full/transmission_projects/adjust_lines.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=4000, mem=4 GB, mem_mib=3815
+[Fri Oct 30 09:25:58 2026]
+Simplifying network
+rule simplify_network:
+    input: resources/eagle_full/networks/base_extended.nc, resources/eagle_full/onshore_regions_base.geojson, resources/eagle_full/offshore_regions_base.geojson, resources/eagle_full/admin_shapes.geojson
+    output: resources/eagle_full/networks/simplified.nc, resources/eagle_full/onshore_regions_simplified.geojson, resources/eagle_full/offshore_regions_simplified.geojson, resources/eagle_full/busmap_simplify_network.csv
+    log: logs/eagle_full/simplify_network.log
+    jobid: 20
+    benchmark: benchmarks\eagle_full\simplify_network_b.tsv
+    reason: Missing output files: resources/eagle_full/offshore_regions_simplified.geojson, resources/eagle_full/networks/simplified.nc, resources/eagle_full/onshore_regions_simplified.geojson; Input files updated by another job: resources/eagle_full/admin_shapes.geojson, resources/eagle_full/onshore_regions_base.geojson, resources/eagle_full/networks/base_extended.nc, resources/eagle_full/offshore_regions_base.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=12000, mem=12 GB, mem_mib=11445
+[Fri Oct 30 09:25:58 2026]
+rule process_cost_data:
+    input: resources/eagle_full/networks/simplified.nc, data/costs/archive/v0.15.0/costs_2050.csv, data/custom_costs.csv
+    output: resources/eagle_full/costs_2050_processed.csv
+    log: logs/eagle_full/build_cost_data_2050.log
+    jobid: 50
+    benchmark: benchmarks\eagle_full\build_cost_data_2050.tsv
+    reason: Missing output files: resources/eagle_full/costs_2050_processed.csv; Input files updated by another job: resources/eagle_full/networks/simplified.nc, data/costs/archive/v0.15.0/costs_2050.csv
+    wildcards: horizon=2050
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=4000, mem=4 GB, mem_mib=3815
+[Fri Oct 30 09:25:58 2026]
+Building electricity demand time series for base network
+rule build_electricity_demand_base:
+    input: resources/eagle_full/networks/simplified.nc, resources/eagle_full/onshore_regions_simplified.geojson, data/jrc_energy_atlas/archive/2026-02-16/electricity_tot_demand_2019.tif, data/desnz_electricity_consumption/archive/2026-02-16/Subnational_electricity_consumption_statistics_2005-2024.xlsx, data/ons_lad/archive/may-2024/Local_Authority_Districts_May_2024_Boundaries__UK_BSC.geojson, resources/eagle_full/nuts3_shapes.geojson, resources/eagle_full/electricity_demand.csv
+    output: resources/eagle_full/electricity_demand_simplified.nc
+    log: logs/eagle_full/build_electricity_demand_simplified.log
+    jobid: 25
+    benchmark: benchmarks\eagle_full\build_electricity_demand_simplified.tsv
+    reason: Missing output files: resources/eagle_full/electricity_demand_simplified.nc; Input files updated by another job: resources/eagle_full/networks/simplified.nc, data/jrc_energy_atlas/archive/2026-02-16/electricity_tot_demand_2019.tif, data/desnz_electricity_consumption/archive/2026-02-16/Subnational_electricity_consumption_statistics_2005-2024.xlsx, resources/eagle_full/electricity_demand.csv, resources/eagle_full/onshore_regions_simplified.geojson, data/ons_lad/archive/may-2024/Local_Authority_Districts_May_2024_Boundaries__UK_BSC.geojson, resources/eagle_full/nuts3_shapes.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Clustering network
+rule cluster_network:
+    input: resources/eagle_full/networks/simplified.nc, resources/eagle_full/admin_shapes.geojson, resources/eagle_full/onshore_regions_simplified.geojson, resources/eagle_full/offshore_regions_simplified.geojson, resources/eagle_full/electricity_demand_simplified.nc
+    output: resources/eagle_full/networks/clustered.nc, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_regions.geojson, resources/eagle_full/busmap_cluster_network.csv, resources/eagle_full/linemap_cluster_network.csv
+    log: logs/eagle_full/cluster_network.log
+    jobid: 19
+    benchmark: benchmarks\eagle_full\cluster_network.tsv
+    reason: Missing output files: resources/eagle_full/onshore_regions.geojson, resources/eagle_full/networks/clustered.nc, resources/eagle_full/busmap_cluster_network.csv, resources/eagle_full/offshore_regions.geojson; Input files updated by another job: resources/eagle_full/offshore_regions_simplified.geojson, resources/eagle_full/networks/simplified.nc, resources/eagle_full/admin_shapes.geojson, resources/eagle_full/onshore_regions_simplified.geojson, resources/eagle_full/electricity_demand_simplified.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=10000, mem=10 GB, mem_mib=9537
+[Fri Oct 30 09:25:58 2026]
+Determining availability matrix for offwind-float technology
+rule determine_availability_matrix:
+    input: data/corine/archive/v18_5/corine.tif, data/natura/archive/2025-08-15/natura.tiff, data/gebco/archive/2014/GEBCO_2014_2D.nc, resources/eagle_full/shipdensity_raster.tif, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/offshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/availability_matrix_offwind-float.nc
+    log: logs/eagle_full/determine_availability_matrix_offwind-float.log
+    jobid: 47
+    benchmark: benchmarks\eagle_full\determine_availability_matrix_offwind-float.tsv
+    reason: Missing output files: resources/eagle_full/availability_matrix_offwind-float.nc; Input files updated by another job: data/corine/archive/v18_5/corine.tif, resources/eagle_full/shipdensity_raster.tif, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/country_shapes.geojson, data/gebco/archive/2014/GEBCO_2014_2D.nc, data/natura/archive/2025-08-15/natura.tiff, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/offshore_regions.geojson
+    wildcards: technology=offwind-float
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Determining availability matrix for offwind-dc technology
+rule determine_availability_matrix:
+    input: data/corine/archive/v18_5/corine.tif, data/natura/archive/2025-08-15/natura.tiff, data/gebco/archive/2014/GEBCO_2014_2D.nc, resources/eagle_full/shipdensity_raster.tif, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/offshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/availability_matrix_offwind-dc.nc
+    log: logs/eagle_full/determine_availability_matrix_offwind-dc.log
+    jobid: 45
+    benchmark: benchmarks\eagle_full\determine_availability_matrix_offwind-dc.tsv
+    reason: Missing output files: resources/eagle_full/availability_matrix_offwind-dc.nc; Input files updated by another job: data/corine/archive/v18_5/corine.tif, resources/eagle_full/shipdensity_raster.tif, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/country_shapes.geojson, data/gebco/archive/2014/GEBCO_2014_2D.nc, data/natura/archive/2025-08-15/natura.tiff, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/offshore_regions.geojson
+    wildcards: technology=offwind-dc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building powerplant list
+rule build_powerplants:
+    input: resources/eagle_full/networks/clustered.nc, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_regions.geojson, data/powerplants/archive/0.8.1/powerplants.csv, data/custom_powerplants.csv
+    output: resources/eagle_full/powerplants.csv
+    log: logs/eagle_full/build_powerplants.log
+    jobid: 52
+    benchmark: benchmarks\eagle_full\build_powerplants.tsv
+    reason: Missing output files: resources/eagle_full/powerplants.csv; Input files updated by another job: resources/eagle_full/onshore_regions.geojson, data/powerplants/archive/0.8.1/powerplants.csv, resources/eagle_full/networks/clustered.nc, resources/eagle_full/offshore_regions.geojson
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=7000, mem=7 GB, mem_mib=6676
+[Fri Oct 30 09:25:58 2026]
+Determining availability matrix for solar technology
+rule determine_availability_matrix:
+    input: data/corine/archive/v18_5/corine.tif, data/natura/archive/2025-08-15/natura.tiff, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/availability_matrix_solar.nc
+    log: logs/eagle_full/determine_availability_matrix_solar.log
+    jobid: 3
+    benchmark: benchmarks\eagle_full\determine_availability_matrix_solar.tsv
+    reason: Missing output files: resources/eagle_full/availability_matrix_solar.nc; Input files updated by another job: data/corine/archive/v18_5/corine.tif, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/country_shapes.geojson, data/natura/archive/2025-08-15/natura.tiff, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: technology=solar
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Determining availability matrix for offwind-ac technology
+rule determine_availability_matrix:
+    input: data/corine/archive/v18_5/corine.tif, data/natura/archive/2025-08-15/natura.tiff, data/gebco/archive/2014/GEBCO_2014_2D.nc, resources/eagle_full/shipdensity_raster.tif, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/offshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/availability_matrix_offwind-ac.nc
+    log: logs/eagle_full/determine_availability_matrix_offwind-ac.log
+    jobid: 40
+    benchmark: benchmarks\eagle_full\determine_availability_matrix_offwind-ac.tsv
+    reason: Missing output files: resources/eagle_full/availability_matrix_offwind-ac.nc; Input files updated by another job: data/corine/archive/v18_5/corine.tif, resources/eagle_full/shipdensity_raster.tif, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/country_shapes.geojson, data/gebco/archive/2014/GEBCO_2014_2D.nc, data/natura/archive/2025-08-15/natura.tiff, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/offshore_regions.geojson
+    wildcards: technology=offwind-ac
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Determining availability matrix for onwind technology
+rule determine_availability_matrix:
+    input: data/corine/archive/v18_5/corine.tif, data/natura/archive/2025-08-15/natura.tiff, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/availability_matrix_onwind.nc
+    log: logs/eagle_full/determine_availability_matrix_onwind.log
+    jobid: 38
+    benchmark: benchmarks\eagle_full\determine_availability_matrix_onwind.tsv
+    reason: Missing output files: resources/eagle_full/availability_matrix_onwind.nc; Input files updated by another job: data/corine/archive/v18_5/corine.tif, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/country_shapes.geojson, data/natura/archive/2025-08-15/natura.tiff, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: technology=onwind
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Determining availability matrix for solar-hsat technology
+rule determine_availability_matrix:
+    input: data/corine/archive/v18_5/corine.tif, data/natura/archive/2025-08-15/natura.tiff, resources/eagle_full/country_shapes.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/availability_matrix_solar-hsat.nc
+    log: logs/eagle_full/determine_availability_matrix_solar-hsat.log
+    jobid: 36
+    benchmark: benchmarks\eagle_full\determine_availability_matrix_solar-hsat.tsv
+    reason: Missing output files: resources/eagle_full/availability_matrix_solar-hsat.nc; Input files updated by another job: data/corine/archive/v18_5/corine.tif, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/country_shapes.geojson, data/natura/archive/2025-08-15/natura.tiff, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: technology=solar-hsat
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Aggregating electricity demand to clustered resolution
+rule cluster_electricity_demand:
+    input: resources/eagle_full/electricity_demand_simplified.nc, resources/eagle_full/busmap_cluster_network.csv
+    output: resources/eagle_full/electricity_demand.nc
+    log: logs/eagle_full/cluster_electricity_demand.log
+    jobid: 59
+    benchmark: benchmarks\eagle_full\cluster_electricity_demand.tsv
+    reason: Missing output files: resources/eagle_full/electricity_demand.nc; Input files updated by another job: resources/eagle_full/electricity_demand_simplified.nc, resources/eagle_full/busmap_cluster_network.csv
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=3000, mem=3 GB, mem_mib=2862
+[Fri Oct 30 09:25:58 2026]
+Building renewable profiles for solar-hsat technology
+rule build_renewable_profiles:
+    input: resources/eagle_full/availability_matrix_solar-hsat.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_solar-hsat.nc, resources/eagle_full/regions_by_class_solar-hsat.geojson
+    log: logs/eagle_full/build_renewable_profile_solar-hsat.log
+    jobid: 35
+    benchmark: benchmarks\eagle_full\build_renewable_profile_solar-hsat.tsv
+    reason: Missing output files: resources/eagle_full/profile_solar-hsat.nc, resources/eagle_full/regions_by_class_solar-hsat.geojson; Input files updated by another job: resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/availability_matrix_solar-hsat.nc, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: technology=solar-hsat
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building renewable profiles for offwind-ac technology
+rule build_renewable_profiles:
+    input: resources/eagle_full/availability_matrix_offwind-ac.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_offwind-ac.nc, resources/eagle_full/regions_by_class_offwind-ac.geojson
+    log: logs/eagle_full/build_renewable_profile_offwind-ac.log
+    jobid: 39
+    benchmark: benchmarks\eagle_full\build_renewable_profile_offwind-ac.tsv
+    reason: Missing output files: resources/eagle_full/profile_offwind-ac.nc, resources/eagle_full/regions_by_class_offwind-ac.geojson; Input files updated by another job: resources/eagle_full/availability_matrix_offwind-ac.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/offshore_regions.geojson
+    wildcards: technology=offwind-ac
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building renewable profiles for solar technology
+rule build_renewable_profiles:
+    input: resources/eagle_full/availability_matrix_solar.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_solar.nc, resources/eagle_full/regions_by_class_solar.geojson
+    log: logs/eagle_full/build_renewable_profile_solar.log
+    jobid: 2
+    benchmark: benchmarks\eagle_full\build_renewable_profile_solar.tsv
+    reason: Missing output files: resources/eagle_full/regions_by_class_solar.geojson, resources/eagle_full/profile_solar.nc; Input files updated by another job: resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/availability_matrix_solar.nc, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: technology=solar
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building renewable profiles for offwind-dc technology
+rule build_renewable_profiles:
+    input: resources/eagle_full/availability_matrix_offwind-dc.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_offwind-dc.nc, resources/eagle_full/regions_by_class_offwind-dc.geojson
+    log: logs/eagle_full/build_renewable_profile_offwind-dc.log
+    jobid: 44
+    benchmark: benchmarks\eagle_full\build_renewable_profile_offwind-dc.tsv
+    reason: Missing output files: resources/eagle_full/profile_offwind-dc.nc, resources/eagle_full/regions_by_class_offwind-dc.geojson; Input files updated by another job: resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/availability_matrix_offwind-dc.nc, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/offshore_regions.geojson
+    wildcards: technology=offwind-dc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building renewable profiles for onwind technology
+rule build_renewable_profiles:
+    input: resources/eagle_full/availability_matrix_onwind.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_onwind.nc, resources/eagle_full/regions_by_class_onwind.geojson
+    log: logs/eagle_full/build_renewable_profile_onwind.log
+    jobid: 37
+    benchmark: benchmarks\eagle_full\build_renewable_profile_onwind.tsv
+    reason: Missing output files: resources/eagle_full/profile_onwind.nc, resources/eagle_full/regions_by_class_onwind.geojson; Input files updated by another job: resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/availability_matrix_onwind.nc, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    wildcards: technology=onwind
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building renewable profiles for offwind-float technology
+rule build_renewable_profiles:
+    input: resources/eagle_full/availability_matrix_offwind-float.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, resources/eagle_full/offshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/profile_offwind-float.nc, resources/eagle_full/regions_by_class_offwind-float.geojson
+    log: logs/eagle_full/build_renewable_profile_offwind-float.log
+    jobid: 46
+    benchmark: benchmarks\eagle_full\build_renewable_profile_offwind-float.tsv
+    reason: Missing output files: resources/eagle_full/profile_offwind-float.nc, resources/eagle_full/regions_by_class_offwind-float.geojson; Input files updated by another job: resources/eagle_full/availability_matrix_offwind-float.nc, resources/eagle_full/offshore_shapes.geojson, resources/eagle_full/onshore_regions.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc, resources/eagle_full/offshore_regions.geojson
+    wildcards: technology=offwind-float
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Performing time series aggregation for temporal resolution reduction
+rule time_aggregation:
+    input: resources/eagle_full/networks/clustered.nc, resources/eagle_full/electricity_demand.nc, resources/eagle_full/profile_solar.nc, resources/eagle_full/profile_solar-hsat.nc, resources/eagle_full/profile_onwind.nc, resources/eagle_full/profile_offwind-ac.nc, resources/eagle_full/profile_offwind-dc.nc, resources/eagle_full/profile_offwind-float.nc, resources/eagle_full/profile_hydro.nc
+    output: resources/eagle_full/snapshot_weightings.csv
+    log: logs/eagle_full/time_aggregation_elec.log
+    jobid: 60
+    benchmark: benchmarks\eagle_full\time_aggregation.tsv
+    reason: Missing output files: resources/eagle_full/snapshot_weightings.csv; Input files updated by another job: resources/eagle_full/networks/clustered.nc, resources/eagle_full/profile_solar.nc, resources/eagle_full/profile_offwind-float.nc, resources/eagle_full/profile_onwind.nc, resources/eagle_full/electricity_demand.nc, resources/eagle_full/profile_offwind-ac.nc, resources/eagle_full/profile_solar-hsat.nc, resources/eagle_full/profile_hydro.nc, resources/eagle_full/profile_offwind-dc.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=5000, mem=5 GB, mem_mib=4769
+[Fri Oct 30 09:25:58 2026]
+Building solar rooftop potentials
+rule build_solar_rooftop_potentials:
+    input: resources/eagle_full/pop_layout_total.nc, resources/eagle_full/regions_by_class_solar.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    output: resources/eagle_full/solar_rooftop_potentials.csv
+    log: logs/eagle_full/build_solar_rooftop_potentials.log
+    jobid: 61
+    benchmark: benchmarks\eagle_full\build_solar_rooftop_potentials.tsv
+    reason: Missing output files: resources/eagle_full/solar_rooftop_potentials.csv; Input files updated by another job: resources/eagle_full/pop_layout_total.nc, resources/eagle_full/regions_by_class_solar.geojson, data/cutout/archive/v1.0/europe-2013-sarah3-era5.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=10000, mem=10 GB, mem_mib=9537
+[Fri Oct 30 09:25:58 2026]
+Composing network for horizon 2050
+rule compose_network:
+    input: resources/eagle_full/profile_solar.nc, resources/eagle_full/profile_solar-hsat.nc, resources/eagle_full/profile_onwind.nc, resources/eagle_full/profile_offwind-ac.nc, resources/eagle_full/profile_offwind-dc.nc, resources/eagle_full/profile_offwind-float.nc, resources/eagle_full/profile_hydro.nc, resources/eagle_full/regions_by_class_solar.geojson, resources/eagle_full/regions_by_class_offwind-dc.geojson, resources/eagle_full/regions_by_class_offwind-ac.geojson, resources/eagle_full/regions_by_class_solar-hsat.geojson, resources/eagle_full/regions_by_class_offwind-float.geojson, resources/eagle_full/regions_by_class_onwind.geojson, data/nuclear_p_max_pu.csv, resources/eagle_full/costs_2050_processed.csv, resources/eagle_full/powerplants.csv, data/hydro_capacities.csv, data/unit_commitment.csv, resources/eagle_full/co2_price.csv, resources/eagle_full/eurostat_energy_balances.csv, data/ghg_emissions/archive/v23/UNFCCC_v23.csv, resources/eagle_full/electricity_demand.nc, resources/eagle_full/snapshot_weightings.csv, resources/eagle_full/networks/clustered.nc, resources/eagle_full/solar_rooftop_potentials.csv, scripts/add_electricity.py, scripts/add_existing_baseyear.py, scripts/add_brownfield.py, scripts/prepare_network.py, scripts/prepare_perfect_foresight.py, scripts/prepare_sector_network.py, scripts/_helpers.py
+    output: resources/eagle_full/networks/composed_2050.nc
+    log: logs/eagle_full/compose_network_2050.log
+    jobid: 1
+    benchmark: benchmarks\eagle_full\compose_network_2050.tsv
+    reason: Missing output files: resources/eagle_full/networks/composed_2050.nc; Input files updated by another job: resources/eagle_full/networks/clustered.nc, resources/eagle_full/profile_solar.nc, resources/eagle_full/profile_offwind-float.nc, resources/eagle_full/profile_onwind.nc, resources/eagle_full/electricity_demand.nc, resources/eagle_full/regions_by_class_onwind.geojson, resources/eagle_full/regions_by_class_offwind-dc.geojson, resources/eagle_full/co2_price.csv, resources/eagle_full/profile_solar-hsat.nc, resources/eagle_full/profile_hydro.nc, resources/eagle_full/profile_offwind-dc.nc, resources/eagle_full/eurostat_energy_balances.csv, resources/eagle_full/regions_by_class_solar.geojson, resources/eagle_full/regions_by_class_offwind-ac.geojson, resources/eagle_full/powerplants.csv, resources/eagle_full/profile_offwind-ac.nc, resources/eagle_full/regions_by_class_offwind-float.geojson, resources/eagle_full/solar_rooftop_potentials.csv, resources/eagle_full/costs_2050_processed.csv, resources/eagle_full/snapshot_weightings.csv, resources/eagle_full/regions_by_class_solar-hsat.geojson, data/ghg_emissions/archive/v23/UNFCCC_v23.csv
+    wildcards: horizon=2050
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp, mem_mb=10000, mem=10 GB, mem_mib=9537
+[Fri Oct 30 09:25:58 2026]
+Collecting composed network files
+rule compose_networks:
+    input: resources/eagle_full/networks/composed_2050.nc
+    jobid: 0
+    reason: Input files updated by another job: resources/eagle_full/networks/composed_2050.nc
+    resources: tmpdir=C:\Users\naiar\AppData\Local\Temp
+Job stats:
+job                                         count
+----------------------------------------  -------
+retrieve_co2_prices                             1
+retrieve_corine                                 1
+retrieve_cost_data                              1
+retrieve_country_runoff                         1
+retrieve_cutout                                 1
+retrieve_desnz_electricity_consumption          1
+retrieve_eez                                    1
+retrieve_electricity_demand_energy_atlas        1
+retrieve_electricity_demand_entsoe              1
+retrieve_electricity_demand_neso                1
+retrieve_electricity_demand_opsd                1
+retrieve_eu_nuts_2021                           1
+retrieve_eurostat_balances                      1
+retrieve_gdp_per_capita                         1
+retrieve_gebco                                  1
+retrieve_ghg_emissions                          1
+retrieve_jrc_ardeco                             1
+retrieve_natura                                 1
+retrieve_ons_lad                                1
+retrieve_osm_archive                            1
+retrieve_osm_boundaries                         1
+retrieve_population_count                       1
+retrieve_powerplants                            1
+retrieve_ship_raster                            1
+retrieve_synthetic_electricity_demand           1
+retrieve_worldbank_urban_population             1
+build_co2_prices                                1
+build_electricity_demand                        1
+build_eurostat_balances                         1
+build_offshore_shapes                           1
+build_osm_boundaries                            4
+build_ship_raster                               1
+build_nuts3_shapes                              1
+build_population_layouts                        1
+build_shapes                                    1
+base_network                                    1
+build_hydro_profile                             1
+build_transmission_projects                     1
+add_transmission_projects_and_dlr               1
+simplify_network                                1
+build_electricity_demand_base                   1
+process_cost_data                               1
+cluster_network                                 1
+build_powerplants                               1
+cluster_electricity_demand                      1
+determine_availability_matrix                   6
+build_renewable_profiles                        6
+build_solar_rooftop_potentials                  1
+time_aggregation                                1
+compose_network                                 1
+compose_networks                                1
+total                                          64
+
+Reasons:
+    (check individual jobs above for details)
+    input files updated by another job:
+        add_transmission_projects_and_dlr, base_network, build_co2_prices, build_electricity_demand, build_electricity_demand_base, build_eurostat_balances, build_hydro_profile, build_nuts3_shapes, build_offshore_shapes, build_osm_boundaries, build_population_layouts, build_powerplants, build_renewable_profiles, build_shapes, build_ship_raster, build_solar_rooftop_potentials, build_transmission_projects, cluster_electricity_demand, cluster_network, compose_network, compose_networks, determine_availability_matrix, process_cost_data, simplify_network, time_aggregation
+    output files have to be generated:
+        add_transmission_projects_and_dlr, base_network, build_co2_prices, build_electricity_demand, build_electricity_demand_base, build_eurostat_balances, build_hydro_profile, build_nuts3_shapes, build_offshore_shapes, build_osm_boundaries, build_population_layouts, build_powerplants, build_renewable_profiles, build_shapes, build_ship_raster, build_solar_rooftop_potentials, build_transmission_projects, cluster_electricity_demand, cluster_network, compose_network, determine_availability_matrix, process_cost_data, retrieve_co2_prices, retrieve_corine, retrieve_cost_data, retrieve_country_runoff, retrieve_cutout, retrieve_desnz_electricity_consumption, retrieve_eez, retrieve_electricity_demand_energy_atlas, retrieve_electricity_demand_entsoe, retrieve_electricity_demand_neso, retrieve_electricity_demand_opsd, retrieve_eu_nuts_2021, retrieve_eurostat_balances, retrieve_gdp_per_capita, retrieve_gebco, retrieve_ghg_emissions, retrieve_jrc_ardeco, retrieve_natura, retrieve_ons_lad, retrieve_osm_archive, retrieve_osm_boundaries, retrieve_population_count, retrieve_powerplants, retrieve_ship_raster, retrieve_synthetic_electricity_demand, retrieve_worldbank_urban_population, simplify_network, time_aggregation
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.

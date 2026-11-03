@@ -1,0 +1,37 @@
+
+# EAGLE - Red electrica de alta resolucion
+
+run:
+  name: eagle_full
+
+countries:
+  - ES
+  - FR
+  - PT
+
+# Modelo exclusivamente electrico
+sector:
+  enabled: false
+
+# Maxima resolucion espacial
+clustering:
+  mode: busmap
+
+  simplify_network:
+    to_substations: false
+    remove_stubs: false
+    remove_stubs_across_borders: false
+
+  cluster_network:
+    n_clusters: all
+
+  temporal:
+    averaging: false
+    segmentation: false
+    representative: false
+
+# Solver de codigo abierto
+solving:
+  solver:
+    name: highs
+    options: highs-default
